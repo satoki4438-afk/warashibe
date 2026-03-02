@@ -5,110 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WARASHIBE - Premium Gunpla Barter Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
-        /* ========================================
-           1. 全合体 CSS (デザインのすべて)
-           ======================================== */
         :root {
-            --gold: #D4AF37;
-            --gold-light: #E5C158;
-            --gold-dark: #B8860B;
-            --black: #1a1a1a;
-            --white: #ffffff;
-            --gray-light: #f5f5f5;
-            --gray-medium: #888888;
-            --radius-lg: 16px;
-            --radius-md: 10px;
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+            --gold: #D4AF37; --gold-light: #E5C158; --gold-dark: #B8860B;
+            --black: #1a1a1a; --white: #ffffff; --gray-light: #f5f5f5;
+            --radius-lg: 16px; --radius-md: 10px;
         }
-
-        body {
-            margin: 0;
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--white);
-            color: var(--black);
-            overflow-x: hidden;
-        }
-
-        /* ヘッダー */
-        .mp-header {
-            position: sticky;
-            top: 0;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            z-index: 1000;
-        }
-        .mp-header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            height: 64px;
-            display: flex;
-            align-items: center;
-        }
-        .mp-logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
+        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; background-color: var(--white); color: var(--black); }
+        .mp-header { position: sticky; top: 0; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 1000; }
+        .mp-header-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; height: 64px; display: flex; align-items: center; }
+        .mp-logo { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
         .header-user-area { margin-left: auto; display: flex; align-items: center; gap: 15px; }
-
-        /* マーケットプレイス */
         .marketplace-content { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
-        .marketplace-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .marketplace-item {
-            background: #fff;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--gray-light);
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            cursor: pointer;
-            animation: cardFadeUp 0.5s ease both;
-        }
-        @keyframes cardFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .marketplace-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .marketplace-item { background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--gray-light); overflow: hidden; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; cursor: pointer; }
         .marketplace-item:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2); border-color: var(--gold); }
-        .item-image { height: 200px; background: #333; position: relative; overflow: hidden; }
-        .item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .item-image { height: 220px; background: #333; overflow: hidden; }
+        .item-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .marketplace-item:hover .item-image img { transform: scale(1.1); }
         .item-content { padding: 15px; }
         .item-title { font-weight: 700; font-size: 1rem; margin: 0 0 8px; height: 3em; overflow: hidden; }
-        .match-indicator {
-            position: absolute; top: 10px; right: 10px; background: #ef4444; color: #fff; 
-            padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 900; z-index: 10;
-            animation: pulse 2s infinite;
-        }
+        .match-indicator { position: absolute; top: 10px; right: 10px; background: #ef4444; color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 900; z-index: 10; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-        /* 検索・フィルター */
-        .marketplace-filters { margin-bottom: 30px; }
-        .search-bar { position: relative; margin-bottom: 15px; }
-        .search-bar input {
-            width: 100%; padding: 12px 20px 12px 45px; border-radius: var(--radius-md);
-            border: 2px solid var(--gray-light); font-size: 1rem; outline: none; transition: 0.3s;
-        }
-        .search-bar input:focus { border-color: var(--gold); }
-        .filter-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .filter-row select { padding: 8px 15px; border-radius: 8px; border: 1px solid #ddd; background: #fff; }
-
+        .search-bar input { width: 100%; padding: 12px 20px; border-radius: var(--radius-md); border: 2px solid var(--gray-light); font-size: 1rem; outline: none; margin-bottom: 20px; }
+        
         /* チャットモーダル */
-        .chat-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000;
-            display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px);
-        }
+        .chat-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .chat-modal.active { display: flex; }
-        .chat-modal-content {
-            background: #fff; width: 95%; max-width: 500px; height: 80vh; 
-            border-radius: 20px; display: flex; flex-direction: column; overflow: hidden;
-        }
+        .chat-modal-content { background: #fff; width: 95%; max-width: 500px; height: 80vh; border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; }
         .chat-header { padding: 15px; background: #1a1a1a; color: #fff; display: flex; align-items: center; justify-content: space-between; }
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; background: #f0f2f5; }
         .message-bubble { padding: 10px 15px; border-radius: 18px; margin-bottom: 10px; max-width: 80%; font-size: 0.9rem; }
@@ -117,179 +41,55 @@
         .message-own .message-bubble { background: var(--gold); color: #fff; }
         .chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; }
         .chat-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
-
-        /* トレードフロー */
-        .trade-status-bar { background: #fff8e1; border-bottom: 2px solid var(--gold); padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .trade-stepper { display: flex; width: 100%; justify-content: space-around; margin-top: 5px; }
-        .trade-step { font-size: 0.65rem; color: #888; text-align: center; }
-        .trade-step.active { color: var(--gold-dark); font-weight: 900; }
-
-        /* トースト */
-        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
-        .toast { background: #333; color: #fff; padding: 12px 24px; border-radius: 50px; margin-top: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); animation: slideIn 0.3s forwards; }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        /* スケルトン */
-        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 400px 100%; animation: shimmer 1.5s infinite; }
-        @keyframes shimmer { from { background-position: -400px 0; } to { background-position: 400px 0; } }
     </style>
 </head>
 <body>
-
-    <header class="mp-header">
-        <div class="mp-header-inner">
-            <a href="#" class="mp-logo">WARASHIBE</a>
-            <div class="header-user-area" id="headerAuthArea">
-                </div>
-        </div>
-    </header>
-
+    <header class="mp-header"><div class="mp-header-inner"><a href="#" class="mp-logo">WARASHIBE</a><div class="header-user-area">👤 ゲスト</div></div></header>
     <main class="marketplace-content">
-        <div class="marketplace-filters">
-            <div class="search-bar">
-                <input type="text" id="mainSearch" placeholder="機体名、ユーザー名で探す..." oninput="handleSearch(this.value)">
-            </div>
-            <div class="filter-row">
-                <select id="catFilter" onchange="applyFilters()"><option value="all">すべてのカテゴリ</option><option value="MG">MG</option><option value="HG">HG</option><option value="RG">RG</option></select>
-                <select id="sortFilter" onchange="applyFilters()"><option value="match">🎯 マッチ度順</option><option value="new">新着順</option></select>
-            </div>
-        </div>
-        <div class="marketplace-grid" id="itemGrid">
-            </div>
+        <input type="text" id="mainSearch" class="search-bar" placeholder="機体名で探す..." oninput="handleSearch(this.value)">
+        <div class="marketplace-grid" id="itemGrid"></div>
     </main>
 
     <div class="chat-modal" id="chatModal">
         <div class="chat-modal-content">
-            <div class="chat-header">
-                <span id="chatTitle">メッセージ</span>
-                <button onclick="closeChat()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button>
-            </div>
-            <div id="tradeFlowArea"></div>
+            <div class="chat-header"><span id="chatTitle">交渉</span><button onclick="closeChat()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button></div>
             <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" class="chat-input" placeholder="メッセージを入力...">
-                <button onclick="sendMessage()" style="background:var(--gold); border:none; color:white; padding:10px 15px; border-radius:20px; cursor:pointer;">送信</button>
-            </div>
+            <div class="chat-input-area"><input type="text" id="chatInput" class="chat-input" placeholder="メッセージ..."><button onclick="sendMessage()" style="background:var(--gold); border:none; color:white; padding:10px 15px; border-radius:20px;">送信</button></div>
         </div>
     </div>
 
-    <div class="toast-container" id="toastContainer"></div>
-
     <script>
-        /* ========================================
-           2. 全合体 JS (ロジックのすべて)
-           ======================================== */
-
-        // --- 設定 ---
-        const isDemo = true;
-        let currentUser = { userId: "current_user", username: "ゲスト", wishList: ["MG νガンダム Ver.Ka", "MG サザビー Ver.Ka"] };
-
-        // --- モックデータ ---
-        const mockUsers = [
-            { userId: "user_01", username: "シャア専用", avatar: "S", rating: 4.9 },
-            { userId: "user_02", username: "アムロ・レイ", avatar: "A", rating: 4.8 }
-        ];
-
         const mockItems = [
-            { itemId: "it_01", userId: "user_01", name: "MG サザビー Ver.Ka", category: "MG", condition: "未組立", tags: ["宇宙世紀", "シャア"], match: 95 },
-            { itemId: "it_02", userId: "user_02", name: "MG νガンダム Ver.Ka", category: "MG", condition: "組立済", tags: ["宇宙世紀", "アムロ"], match: 90 },
-            { itemId: "it_03", userId: "user_01", name: "HG エアリアル", category: "HG", condition: "未組立", tags: ["水星の魔女"], match: 10 },
-            { itemId: "it_04", userId: "user_02", name: "RG Hi-νガンダム", category: "RG", condition: "未組立", tags: ["宇宙世紀"], match: 85 }
+            { name: "MG サザビー Ver.Ka", category: "MG", condition: "未組立", match: 95, img: "https://images.unsplash.com/photo-1580130281320-0ef0754f2bf7?auto=format&fit=crop&q=80&w=800" },
+            { name: "MG νガンダム Ver.Ka", category: "MG", condition: "組立済", match: 90, img: "https://images.unsplash.com/photo-1531693251400-38df35776dc7?auto=format&fit=crop&q=80&w=800" },
+            { name: "HG エアリアル", category: "HG", condition: "未組立", match: 10, img: "https://images.unsplash.com/photo-1493217465235-0749b13c946e?auto=format&fit=crop&q=80&w=800" },
+            { name: "RG Hi-νガンダム", category: "RG", condition: "未組立", match: 85, img: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800" }
         ];
 
-        // --- 初期化 ---
-        document.addEventListener('DOMContentLoaded', () => {
-            renderHeader();
-            renderGrid(mockItems);
-            showToast("WARASHIBEへようこそ！");
-        });
-
-        // --- ヘッダー描画 ---
-        function renderHeader() {
-            const area = document.getElementById('headerAuthArea');
-            area.innerHTML = `<span style="font-weight:bold; color:var(--gold);">👤 ${currentUser.username}</span>`;
-        }
-
-        // --- グリッド描画 ---
         function renderGrid(items) {
-            const grid = document.getElementById('itemGrid');
-            grid.innerHTML = items.map(item => `
-                <div class="marketplace-item" onclick="openChat('${item.name}', '${item.userId}')">
+            document.getElementById('itemGrid').innerHTML = items.map(item => `
+                <div class="marketplace-item" onclick="openChat('${item.name}')">
                     ${item.match > 80 ? `<div class="match-indicator">${item.match}% MATCH</div>` : ''}
-                    <div class="item-image">
-                        <div style="color:white; display:flex; align-items:center; justify-content:center; height:100%; font-weight:900;">GUNPLA IMAGE</div>
-                    </div>
-                    <div class="item-content">
-                        <h3 class="item-title">${item.name}</h3>
-                        <div style="font-size:0.8rem; color:#888;">${item.category} | ${item.condition}</div>
-                    </div>
+                    <div class="item-image"><img src="${item.img}" alt="${item.name}"></div>
+                    <div class="item-content"><h3 class="item-title">${item.name}</h3><div style="font-size:0.8rem; color:#888;">${item.category} | ${item.condition}</div></div>
                 </div>
             `).join('');
         }
 
-        // --- フィルター機能 ---
-        function applyFilters() {
-            const cat = document.getElementById('catFilter').value;
-            let filtered = mockItems;
-            if(cat !== 'all') filtered = mockItems.filter(i => i.category === cat);
-            renderGrid(filtered);
-        }
-
-        function handleSearch(val) {
-            const filtered = mockItems.filter(i => i.name.toLowerCase().includes(val.toLowerCase()));
-            renderGrid(filtered);
-        }
-
-        // --- チャット・トレードフロー ---
-        let currentChatPartner = "";
-        function openChat(itemName, userId) {
-            currentChatPartner = userId;
-            document.getElementById('chatTitle').innerText = `${itemName} について相談`;
+        function handleSearch(val) { renderGrid(mockItems.filter(i => i.name.toLowerCase().includes(val.toLowerCase()))); }
+        function openChat(name) { 
+            document.getElementById('chatTitle').innerText = name;
             document.getElementById('chatModal').classList.add('active');
-            
-            // トレードフロー表示
-            document.getElementById('tradeFlowArea').innerHTML = `
-                <div class="trade-status-bar">
-                    <div style="font-size:0.8rem; font-weight:bold;">現在のステータス: 交渉中</div>
-                    <div class="trade-stepper">
-                        <div class="trade-step active">交渉</div><div class="trade-step">合意</div><div class="trade-step">発送</div><div class="trade-step">受取</div>
-                    </div>
-                </div>
-            `;
-            
-            // 初期メッセージ
-            document.getElementById('chatMessages').innerHTML = `
-                <div class="message-partner"><div class="message-bubble">こんにちは！交換に興味を持っていただきありがとうございます。</div></div>
-            `;
+            document.getElementById('chatMessages').innerHTML = '<div class="message-partner"><div class="message-bubble">こんにちは！交換しませんか？</div></div>';
         }
-
         function closeChat() { document.getElementById('chatModal').classList.remove('active'); }
-
         function sendMessage() {
             const input = document.getElementById('chatInput');
             if(!input.value) return;
-            const msgArea = document.getElementById('chatMessages');
-            msgArea.innerHTML += `<div class="message-own"><div class="message-bubble">${input.value}</div></div>`;
+            document.getElementById('chatMessages').innerHTML += `<div class="message-own"><div class="message-bubble">${input.value}</div></div>`;
             input.value = "";
-            msgArea.scrollTop = msgArea.scrollHeight;
-            
-            // デモ用自動返信
-            setTimeout(() => {
-                msgArea.innerHTML += `<div class="message-partner"><div class="message-bubble">了解しました！前向きに検討させてください。</div></div>`;
-                msgArea.scrollTop = msgArea.scrollHeight;
-            }, 1000);
         }
-
-        // --- ユーティリティ ---
-        function showToast(msg) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = msg;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
+        renderGrid(mockItems);
     </script>
 </body>
 </html>
-
